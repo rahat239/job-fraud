@@ -407,7 +407,7 @@ async function run() {
     <div class="lc">
       <div class="rct">STAGE 1 — HYBRID SVM (REAL INFERENCE · CPU)</div>
       <div class="lb"><div class="lf"></div></div>
-      <div class="lt">CALLING REAL BACKEND API...</div>
+      <div class="lt">CALLING REAL BACKEND API... (first request may take ~30s)</div>
     </div>`;
 
   let data = null;
@@ -419,7 +419,7 @@ async function run() {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({fields}),
-      signal: AbortSignal.timeout(15000)
+      signal: AbortSignal.timeout(60000)
     });
     if (resp.ok) {
       data = await resp.json();
@@ -667,7 +667,7 @@ function render(d, fullTxt, apiOk) {
 // ── INIT: ping API and update TPS badge ──────────────────────────────────────
 (async () => {
   try {
-    const r = await fetch(`${API_URL}/health`, {signal: AbortSignal.timeout(5000)});
+    const r = await fetch(`${API_URL}/health`, {signal: AbortSignal.timeout(10000)});
     if (r.ok) {
       const h = await r.json();
       document.getElementById('tpsLabel').textContent =
