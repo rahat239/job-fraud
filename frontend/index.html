@@ -426,8 +426,11 @@ async function run() {
       apiOk = true;
       if (data.stats) {
         const s = data.stats;
-        if (s.cost_bert_1m !== undefined) s.cost_bert_per_1m = s.cost_bert_1m;
-        if (s.cost_ts_1m  !== undefined) s.cost_ts_per_1m   = s.cost_ts_1m;
+        if (s.cost_bert_1m !== undefined) s.cost_bert_per_1m    = s.cost_bert_1m;
+        if (s.cost_ts_1m   !== undefined) s.cost_ts_per_1m      = s.cost_ts_1m;
+        if (s.gpu_hrs_bert !== undefined) s.gpu_hrs_bert_annual = s.gpu_hrs_bert;
+        if (s.gpu_hrs_ts   !== undefined) s.gpu_hrs_ts_annual   = s.gpu_hrs_ts;
+        if (s.svm_roc      !== undefined) s.svm_roc_auc         = s.svm_roc;
       }
       if (data.stats?.svm_tps) {
         document.getElementById('tpsLabel').textContent =
