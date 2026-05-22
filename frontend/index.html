@@ -424,7 +424,11 @@ async function run() {
     if (resp.ok) {
       data = await resp.json();
       apiOk = true;
-      // Update TPS badge from real API
+      if (data.stats) {
+        const s = data.stats;
+        if (s.cost_bert_1m !== undefined) s.cost_bert_per_1m = s.cost_bert_1m;
+        if (s.cost_ts_1m  !== undefined) s.cost_ts_per_1m   = s.cost_ts_1m;
+      }
       if (data.stats?.svm_tps) {
         document.getElementById('tpsLabel').textContent =
           `${(data.stats.svm_tps/1000).toFixed(0)}K preds/sec`;
