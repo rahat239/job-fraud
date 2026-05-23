@@ -160,17 +160,17 @@ select option{background:#090d1a}
   body{flex-direction:column}
   .hd{position:relative}
   .hd-sub{display:block}
-  .layout{display:grid;grid-template-columns:400px 1fr;height:calc(100vh - 50px)}
-  .lp{overflow-y:auto;border-bottom:none;border-right:1px solid var(--b1);display:flex;flex-direction:column}
-  .rp{overflow-y:auto;padding:18px 22px}
+  .layout{display:block;height:calc(100vh - 50px);overflow:hidden}
+  .lp{width:400px;float:left;height:100%;overflow-y:auto;border-bottom:none;border-right:1px solid var(--b1);display:flex;flex-direction:column}
+  .rp{margin-left:400px;height:100%;overflow-y:auto;padding:18px 22px;border-left:none;background:var(--bg)}
   .idle{height:100%}
   .perf-grid{grid-template-columns:repeat(4,1fr)}
 }
 @media(max-width:899px){
   .layout{display:block}
   .hd-sub{display:none}
-  .lp{overflow-y:visible !important}
-  .rp{overflow-y:visible !important;min-height:100px}
+  .lp{width:auto !important;float:none !important;height:auto !important;overflow-y:visible !important}
+  .rp{margin-left:0 !important;height:auto !important;overflow-y:visible !important;min-height:50px}
 }
 </style>
 </head>
@@ -241,17 +241,17 @@ select option{background:#090d1a}
       </div>
     </div>
     <button class="rb" id="runBtn" onclick="run()">▶ &nbsp;EXECUTE PIPELINE</button>
-  </div>
-
-  <!-- RESULTS -->
-  <div class="rp" id="results">
-    <div class="idle">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1" stroke-linecap="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-      </svg>
-      <div class="idle-t">SELECT AN EXAMPLE OR PASTE A JOB POSTING</div>
+    <!-- RESULTS: visible on mobile right below button, on desktop moves to right panel -->
+    <div class="rp" id="results">
+      <div class="idle">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1" stroke-linecap="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        <div class="idle-t">SELECT AN EXAMPLE OR PASTE A JOB POSTING</div>
+      </div>
     </div>
   </div>
+
 </div>
 
 <script>
@@ -375,13 +375,7 @@ async function run(){
   btn.disabled=false;btn.textContent='▶  EXECUTE PIPELINE';
   render(data,fullTxt,apiOk);
 
-  // Scroll to results on mobile after render
-  if(window.innerWidth<900){
-    setTimeout(()=>{
-      const top = resultsEl.getBoundingClientRect().top + window.pageYOffset - 60;
-      window.scrollTo({top, behavior:'smooth'});
-    }, 150);
-  }
+
 }
 
 function render(d,fullTxt,apiOk){
