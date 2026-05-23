@@ -156,11 +156,11 @@ select option{background:#090d1a}
 
 /* ── DESKTOP (900px+): side-by-side fixed layout ── */
 @media(min-width:900px){
-  html,body{height:100%;overflow:hidden}
+  html,body{height:100%}
   body{flex-direction:column}
   .hd{position:relative}
   .hd-sub{display:block}
-  .layout{display:grid;grid-template-columns:400px 1fr;flex:1;overflow:hidden;min-height:0}
+  .layout{display:grid;grid-template-columns:400px 1fr;height:calc(100vh - 50px)}
   .lp{overflow-y:auto;border-bottom:none;border-right:1px solid var(--b1);display:flex;flex-direction:column}
   .rp{overflow-y:auto;padding:18px 22px}
   .idle{height:100%}
@@ -169,6 +169,8 @@ select option{background:#090d1a}
 @media(max-width:899px){
   .layout{display:block}
   .hd-sub{display:none}
+  .lp{overflow-y:visible !important}
+  .rp{overflow-y:visible !important;min-height:100px}
 }
 </style>
 </head>
@@ -335,10 +337,7 @@ async function run(){
 
   resultsEl.innerHTML=`<div class="lc"><div class="rct">STAGE 1 — HYBRID SVM</div><div class="lb"><div class="lf"></div></div><div class="lt">CALLING API... (cold start may take ~30s)</div></div>`;
 
-  // Scroll to results on mobile
-  if(window.innerWidth<900){
-    resultsEl.scrollIntoView({behavior:'smooth'});
-  }
+
 
   let data=null,apiOk=false;
   try{
@@ -378,7 +377,10 @@ async function run(){
 
   // Scroll to results on mobile after render
   if(window.innerWidth<900){
-    setTimeout(()=>resultsEl.scrollIntoView({behavior:'smooth'}),100);
+    setTimeout(()=>{
+      const top = resultsEl.getBoundingClientRect().top + window.pageYOffset - 60;
+      window.scrollTo({top, behavior:'smooth'});
+    }, 150);
   }
 }
 
