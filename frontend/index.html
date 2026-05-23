@@ -40,6 +40,11 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
 .hp.desk-only{display:none}
 
+/* MOBILE TAB BAR */
+.tab-bar{display:flex;border-bottom:1px solid var(--b1);background:var(--s1);flex-shrink:0}
+.tab-bar button{flex:1;padding:10px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;background:transparent;border:none;color:var(--mu);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
+.tab-bar button.active{color:var(--cy);border-bottom-color:var(--cy)}
+
 /* LAYOUT — mobile first: stack vertically */
 .main{display:flex;flex-direction:column;flex:1}
 
@@ -180,6 +185,9 @@ select option{background:var(--bg)}
   .idle{height:100%}
 }
 
+/* hide tab bar on desktop */
+@media(min-width:900px){.tab-bar{display:none}}
+
 /* touch-friendlier tap targets on mobile */
 @media(max-width:640px){
   .eb{padding:7px 12px;font-size:11px}
@@ -208,9 +216,13 @@ select option{background:var(--bg)}
   </div>
 </div>
 
+<div class="tab-bar">
+  <button id="tabInput" class="active" onclick="switchTab('input')">INPUT</button>
+  <button id="tabResults" onclick="switchTab('results')">RESULTS</button>
+</div>
+
 <div class="main">
-  <!-- LEFT: INPUT -->
-  <div class="lp">
+  <div class="lp" id="panelInput">
     <div class="ph">INPUT JOB POSTING</div>
     <div class="exs" id="exBtns"></div>
     <div class="ia">
@@ -276,6 +288,33 @@ select option{background:var(--bg)}
 </div>
 
 <script>
+function switchTab(tab) {
+  const input = document.getElementById('panelInput');
+  const results = document.getElementById('results');
+  const tabInput = document.getElementById('tabInput');
+  const tabResults = document.getElementById('tabResults');
+  if (tab === 'input') {
+    input.style.display = '';
+    results.style.display = 'none';
+    tabInput.classList.add('active');
+    tabResults.classList.remove('active');
+  } else {
+    input.style.display = 'none';
+    results.style.display = '';
+    tabInput.classList.remove('active');
+    tabResults.classList.add('active');
+    window.scrollTo(0,0);
+  }
+}
+
+// Restore both panels when switching to desktop
+window.addEventListener('resize', () => {
+  if (window.innerWidth >= 900) {
+    document.getElementById('panelInput').style.display = '';
+    document.getElementById('results').style.display = '';
+  }
+});
+
 const API_URL = window.BACKEND_URL || 'https://job-fraud.onrender.com';
 
 const REAL = {
@@ -428,8 +467,10 @@ async function run() {
       <div class="lt">CALLING REAL BACKEND API... (first request may take ~30s)</div>
     </div>`;
 
-  // scroll results into view on mobile
-  results.scrollIntoView({behavior:'smooth', block:'start'});
+  // on mobile: switch to results tab automatically
+  if (window.innerWidth < 900) {
+    switchTab('results');
+  }
 
   let data = null;
   let apiOk = false;
