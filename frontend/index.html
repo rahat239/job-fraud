@@ -16,15 +16,14 @@
   --am:#ffb300;--amd:#2a1a00;--amb:#553500;
   --cy:#00bcd4;--bl:#2979ff;--pu:#7c3aed;
 }
-html,body{height:100%;overflow:hidden}
-body{background:var(--bg);color:var(--tx);font-family:'IBM Plex Mono',monospace;font-size:12px;display:flex;flex-direction:column}
-/* scanline */
+html,body{height:100%;min-height:100%}
+body{background:var(--bg);color:var(--tx);font-family:'IBM Plex Mono',monospace;font-size:12px;display:flex;flex-direction:column;overflow-x:hidden}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
   background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px)}
 
 /* HEADER */
 .hd{height:50px;background:var(--s1);border-bottom:1px solid var(--b1);
-  display:flex;align-items:center;gap:16px;padding:0 24px;flex-shrink:0;position:relative;overflow:hidden}
+  display:flex;align-items:center;gap:10px;padding:0 16px;flex-shrink:0;position:relative;overflow:hidden}
 .hd::after{content:'';position:absolute;bottom:0;left:-100%;width:100%;height:1px;
   background:linear-gradient(90deg,transparent,var(--cy),transparent);
   animation:sweep 5s linear infinite}
@@ -32,43 +31,43 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
 .logo{width:26px;height:26px;border:1px solid var(--rd);display:grid;place-items:center;
   font-size:13px;color:var(--rd);animation:glow 2s ease-in-out infinite;flex-shrink:0}
 @keyframes glow{0%,100%{box-shadow:0 0 6px var(--rd)}50%{box-shadow:none}}
-.brand{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;letter-spacing:3px;color:#fff}
+.brand{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;letter-spacing:3px;color:#fff;white-space:nowrap}
 .brand em{color:var(--rd);font-style:normal}
-.hd-sub{font-size:9px;color:var(--mu);letter-spacing:1px}
-.hd-pills{margin-left:auto;display:flex;gap:6px}
-.hp{font-size:9px;letter-spacing:1px;padding:3px 9px;border:1px solid var(--b2);color:var(--mu)}
+.hd-sub{font-size:9px;color:var(--mu);letter-spacing:1px;display:none}
+.hd-pills{margin-left:auto;display:flex;gap:5px;flex-shrink:0}
+.hp{font-size:9px;letter-spacing:1px;padding:3px 7px;border:1px solid var(--b2);color:var(--mu);white-space:nowrap}
 .hp.live{border-color:var(--gb);color:var(--gr);animation:blink 2s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.5}}
+.hp.desk-only{display:none}
 
-/* LAYOUT */
-.main{display:grid;grid-template-columns:400px 1fr;flex:1;overflow:hidden}
+/* LAYOUT — mobile first: stack vertically */
+.main{display:flex;flex-direction:column;flex:1}
 
-/* LEFT */
-.lp{background:var(--s1);border-right:1px solid var(--b1);display:flex;flex-direction:column;overflow:hidden}
-.ph{padding:10px 18px;border-bottom:1px solid var(--b1);font-size:9px;letter-spacing:2px;color:var(--mu)}
+/* LEFT PANEL */
+.lp{background:var(--s1);border-bottom:1px solid var(--b1);display:flex;flex-direction:column}
+.ph{padding:10px 16px;border-bottom:1px solid var(--b1);font-size:9px;letter-spacing:2px;color:var(--mu)}
 .ph::before{content:'> ';color:var(--cy)}
-.exs{padding:10px 18px;border-bottom:1px solid var(--b1);display:flex;gap:6px;flex-wrap:wrap}
-.eb{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;
+.exs{padding:10px 16px;border-bottom:1px solid var(--b1);display:flex;gap:6px;flex-wrap:wrap}
+.eb{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:5px 10px;
   border:1px solid var(--b2);background:transparent;color:var(--mu);cursor:pointer;transition:all .15s}
 .eb:hover{color:var(--tx);border-color:var(--b2);background:var(--s2)}
 .eb.ef{border-color:var(--rdb);color:var(--rd);background:var(--rdd)}
 .eb.el{border-color:var(--gb);color:var(--gr);background:var(--gd)}
 .eb.er{border-color:var(--amb);color:var(--am);background:var(--amd)}
 
-.ia{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:10px}
+.ia{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
 .fl{font-size:9px;letter-spacing:2px;color:var(--mu);margin-bottom:4px;display:block}
 textarea,select{width:100%;background:var(--bg);border:1px solid var(--b2);color:var(--tx);
-  font-family:'IBM Plex Mono',monospace;font-size:11px;padding:7px 9px;resize:none;line-height:1.7;transition:border-color .2s}
+  font-family:'IBM Plex Mono',monospace;font-size:11px;padding:8px 10px;resize:vertical;line-height:1.7;transition:border-color .2s}
 textarea:focus,select:focus{outline:none;border-color:var(--cy)}
 select option{background:var(--bg)}
 .mg{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.tr{display:flex;align-items:center;gap:7px;padding:6px 9px;background:var(--bg);
+.tr{display:flex;align-items:center;gap:7px;padding:8px 10px;background:var(--bg);
   border:1px solid var(--b2);cursor:pointer;user-select:none}
-.tr:hover{border-color:var(--b2)}
-.tr input[type=checkbox]{accent-color:var(--gr);width:12px;height:12px}
+.tr input[type=checkbox]{accent-color:var(--gr);width:14px;height:14px}
 .trl{font-size:10px;color:var(--mu);letter-spacing:.5px}
 
-.rb{flex-shrink:0;margin:0 18px 14px;padding:12px;background:transparent;
+.rb{width:calc(100% - 32px);margin:0 16px 16px;padding:14px;background:transparent;
   border:1px solid var(--cy);color:var(--cy);font-family:'IBM Plex Mono',monospace;
   font-size:11px;letter-spacing:3px;cursor:pointer;position:relative;overflow:hidden;transition:all .2s}
 .rb::before{content:'';position:absolute;inset:0;background:var(--cy);
@@ -78,9 +77,9 @@ select option{background:var(--bg)}
 .rb:disabled{border-color:var(--di);color:var(--mu);cursor:not-allowed}
 .rb:disabled::before{display:none}
 
-/* RIGHT */
-.rp{overflow-y:auto;background:var(--bg);padding:18px 22px;display:flex;flex-direction:column;gap:12px}
-.idle{height:100%;display:flex;align-items:center;justify-content:center;
+/* RIGHT PANEL */
+.rp{background:var(--bg);padding:16px;display:flex;flex-direction:column;gap:12px;min-height:300px}
+.idle{padding:40px 0;display:flex;align-items:center;justify-content:center;
   flex-direction:column;gap:10px;opacity:.15}
 .idle svg{width:44px;height:44px;stroke:var(--tx)}
 .idle-t{font-size:10px;letter-spacing:2px;color:var(--mu)}
@@ -94,14 +93,14 @@ select option{background:var(--bg)}
 .rct{font-size:9px;letter-spacing:2px;color:var(--mu);margin-bottom:10px}
 
 /* VERDICT */
-.vr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.vr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px}
 .vb{font-size:11px;font-weight:700;letter-spacing:2px;padding:5px 14px;border:1px solid}
 .vb.LOW_RISK{color:var(--gr);border-color:var(--gr);background:var(--gd)}
 .vb.HIGH_RISK{color:var(--rd);border-color:var(--rd);background:var(--rdd)}
 .vb.REVIEW{color:var(--am);border-color:var(--am);background:var(--amd)}
-.sb{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;line-height:1}
+.sb{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;line-height:1}
 .sb.sd{color:var(--rd)}.sb.ss{color:var(--gr)}.sb.sw{color:var(--am)}
-.pt{height:3px;background:var(--b1);overflow:hidden;margin-top:5px}
+.pt{height:3px;background:var(--b1);overflow:hidden;margin-top:5px;max-width:200px}
 .pf{height:100%;transition:width .8s cubic-bezier(.4,0,.2,1)}
 .fr{background:var(--rd)}.fg{background:var(--gr)}.fa{background:var(--am)}
 
@@ -112,13 +111,13 @@ select option{background:var(--bg)}
 .sc.ss2a{border-color:var(--amb);background:var(--amd)}
 .sc.ss2n{border-color:var(--b1);background:var(--s1);opacity:.35}
 .sn{font-size:9px;letter-spacing:1.5px;color:var(--mu);margin-bottom:5px}
-.st{font-family:'Syne',sans-serif;font-size:24px;font-weight:700}
+.st{font-family:'Syne',sans-serif;font-size:22px;font-weight:700}
 .ss1 .st{color:var(--gr)}.ss2a .st{color:var(--am)}.ss2n .st{color:var(--di)}
 .snt{font-size:9px;color:var(--mu);margin-top:3px}
 
 /* GATE */
 .gr2{margin-bottom:7px}
-.glr{display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px}
+.glr{display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;flex-wrap:wrap;gap:4px}
 .gv{font-family:'Syne',sans-serif;font-size:12px;font-weight:700}
 .gt{height:5px;background:var(--b1);overflow:hidden}
 .gf{height:100%;transition:width 1s ease}
@@ -126,18 +125,18 @@ select option{background:var(--bg)}
 
 /* COST */
 .cs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:12px}
-.cb2{padding:9px 11px;text-align:center;border:1px solid var(--b2);background:var(--s2)}
-.ca2{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin:3px 0}
+.cb2{padding:9px 8px;text-align:center;border:1px solid var(--b2);background:var(--s2)}
+.ca2{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin:3px 0;word-break:break-all}
 .cl{font-size:9px;letter-spacing:1px;color:var(--mu)}
 .brc{margin-top:8px}
 .brr{margin-bottom:7px}
-.brl{display:flex;justify-content:space-between;font-size:10px;color:var(--mu);margin-bottom:3px}
+.brl{display:flex;justify-content:space-between;font-size:10px;color:var(--mu);margin-bottom:3px;flex-wrap:wrap;gap:4px}
 .bro{height:8px;background:var(--b1);overflow:hidden}
 .bri{height:100%;transition:width 1.4s cubic-bezier(.4,0,.2,1)}
 
 /* TERMS */
 .tw{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
-.tc{font-size:10px;padding:2px 8px;border:1px solid}
+.tc{font-size:10px;padding:3px 8px;border:1px solid}
 .tc.tf{border-color:var(--rdb);color:var(--rd);background:var(--rdd)}
 .tc.tl{border-color:var(--gb);color:var(--gr);background:var(--gd)}
 .tp{font-size:11px;line-height:1.8;color:var(--mu);padding:8px;background:var(--bg);
@@ -153,14 +152,44 @@ select option{background:var(--bg)}
 
 /* PERF BADGE */
 .pb2{display:inline-flex;align-items:center;gap:6px;font-size:10px;
-  padding:4px 10px;border:1px solid var(--gb);color:var(--gr);background:var(--gd)}
+  padding:4px 10px;border:1px solid var(--gb);color:var(--gr);background:var(--gd);flex-wrap:wrap}
 .err-box{background:var(--rdd);border:1px solid var(--rdb);padding:10px;
   font-size:11px;color:var(--rd);margin-top:8px}
+
+/* PERF GRID — stack on small screens */
+.perf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
 
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--b2)}
-select option{background:#090d1a}
+
+/* ── TABLET (640px+) ── */
+@media(min-width:640px){
+  .hd-sub{display:block}
+  .hp.desk-only{display:inline-flex}
+  .perf-grid{grid-template-columns:repeat(4,1fr)}
+}
+
+/* ── DESKTOP (900px+) ── */
+@media(min-width:900px){
+  html,body{height:100%;overflow:hidden}
+  .main{display:grid;grid-template-columns:400px 1fr;flex:1;overflow:hidden}
+  .lp{border-right:1px solid var(--b1);border-bottom:none;overflow-y:auto}
+  .ia{overflow-y:visible}
+  .rp{overflow-y:auto;padding:18px 22px}
+  .idle{height:100%}
+}
+
+/* touch-friendlier tap targets on mobile */
+@media(max-width:640px){
+  .eb{padding:7px 12px;font-size:11px}
+  .rb{padding:16px;font-size:12px}
+  textarea{font-size:13px}
+  select{font-size:13px;padding:10px}
+  .tr{padding:10px}
+  .sg{grid-template-columns:1fr}
+  .cs{grid-template-columns:1fr 1fr}
+}
 </style>
 </head>
 <body>
@@ -172,9 +201,9 @@ select option{background:#090d1a}
     <div class="hd-sub">TWO-STAGE PIPELINE · EMSCAD · BRAC UNIVERSITY 2025</div>
   </div>
   <div class="hd-pills">
-    <span class="hp live">● LIVE API</span>
-    <span class="hp">HYBRID SVM</span>
-    <span class="hp">DISTILBERT</span>
+    <span class="hp live">● LIVE</span>
+    <span class="hp desk-only">HYBRID SVM</span>
+    <span class="hp desk-only">DISTILBERT</span>
     <span class="hp" id="tpsLabel">—</span>
   </div>
 </div>
@@ -223,8 +252,8 @@ select option{background:#090d1a}
           <select id="mInd">
             <option value="Unknown">Industry: Unknown</option>
             <option value="Computer Software" selected>Computer Software</option>
-            <option value="Oil & Energy">Oil & Energy</option>
-            <option value="Staffing and Recruiting">Staffing & Recruit.</option>
+            <option value="Oil &amp; Energy">Oil &amp; Energy</option>
+            <option value="Staffing and Recruiting">Staffing &amp; Recruit.</option>
             <option value="Internet">Internet</option>
             <option value="Financial Services">Financial Services</option>
             <option value="Accounting">Accounting</option>
@@ -247,13 +276,8 @@ select option{background:#090d1a}
 </div>
 
 <script>
-// ── CONFIG ────────────────────────────────────────────────────────────────────
-// Set this to your Render backend URL after deployment
-// During local dev: http://localhost:5000
-// After Render deploy: https://your-app.onrender.com
 const API_URL = window.BACKEND_URL || 'https://job-fraud.onrender.com';
 
-// Real values from trained models (fallback if API unreachable)
 const REAL = {
   low_thresh:0.20, high_thresh:0.65, escalation_rate:0.012,
   svm_tps:198742, bert_tps:118, gpu_cost_per_hour:0.50,
@@ -263,7 +287,6 @@ const REAL = {
   svm_fp:2, svm_fn:25, low_risk_pct:94.9, review_pct:1.2, high_risk_pct:3.9
 };
 
-// Real top fraud terms from LR coefficients (from actual trained model)
 const FRAUD_TERMS_DB = {
   "below link":3.3721,"using below":3.348,"data entry":3.304,
   "apply using":3.0649,"assistant":2.9703,"administrative":2.8353,
@@ -275,7 +298,6 @@ const FRAUD_TERMS_DB = {
   "customer service":1.4,"make money":2.2,"accion":1.6
 };
 
-// ── EXAMPLES ──────────────────────────────────────────────────────────────────
 const EXAMPLES = [
   {
     label:"🚨 Fraud", cls:"ef",
@@ -321,7 +343,6 @@ const EXAMPLES = [
   }
 ];
 
-// ── BUILD EXAMPLE BUTTONS ─────────────────────────────────────────────────────
 const exDiv = document.getElementById('exBtns');
 EXAMPLES.forEach((ex, i) => {
   const b = document.createElement('button');
@@ -350,10 +371,8 @@ function loadEx(i, btn) {
     </div>`;
 }
 
-// Load example 0 on start
 loadEx(0, exDiv.children[0]);
 
-// ── HELPERS ───────────────────────────────────────────────────────────────────
 function getFields() {
   return {
     title:            document.getElementById('fTitle').value,
@@ -393,7 +412,6 @@ function highlightTerms(text, terms) {
 
 function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
-// ── MAIN RUN ──────────────────────────────────────────────────────────────────
 async function run() {
   const btn = document.getElementById('runBtn');
   btn.disabled = true;
@@ -410,11 +428,13 @@ async function run() {
       <div class="lt">CALLING REAL BACKEND API... (first request may take ~30s)</div>
     </div>`;
 
+  // scroll results into view on mobile
+  results.scrollIntoView({behavior:'smooth', block:'start'});
+
   let data = null;
   let apiOk = false;
 
   try {
-    const t0 = performance.now();
     const resp = await fetch(`${API_URL}/predict`, {
       method:'POST',
       headers:{'Content-Type':'application/json'},
@@ -434,14 +454,13 @@ async function run() {
       }
       if (data.stats?.svm_tps) {
         document.getElementById('tpsLabel').textContent =
-          `${(data.stats.svm_tps/1000).toFixed(0)}K preds/sec`;
+          `${(data.stats.svm_tps/1000).toFixed(0)}K/s`;
       }
     }
   } catch(e) {
     console.warn('API unreachable, using local simulation:', e.message);
   }
 
-  // If API unreachable, simulate locally with real model coefficients
   if (!data) {
     await sleep(180 + Math.random()*80);
     const terms = extractLocalTerms(fullTxt);
@@ -483,7 +502,6 @@ async function run() {
   render(data, fullTxt, apiOk);
 }
 
-// ── RENDER ────────────────────────────────────────────────────────────────────
 function render(d, fullTxt, apiOk) {
   const s1    = d.stage1;
   const s2    = d.stage2;
@@ -503,83 +521,74 @@ function render(d, fullTxt, apiOk) {
   const esc = R.escalation_rate;
 
   const html = `
-  <!-- API STATUS -->
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
+  <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:2px;flex-wrap:wrap">
     <span class="pb2">${apiOk
-      ? `✓ LIVE API — Real SVM inference · ${R.svm_tps.toLocaleString()} preds/sec measured`
-      : `⚠ API OFFLINE — Local simulation using real model coefficients`}
+      ? `✓ LIVE API — ${R.svm_tps.toLocaleString()} preds/sec`
+      : `⚠ API OFFLINE — Local simulation`}
     </span>
-    ${d._simulated ? '<span style="font-size:9px;color:var(--mu)">Deploy backend to Render for live inference</span>' : ''}
+    ${d._simulated ? '<span style="font-size:9px;color:var(--mu)">Deploy backend for live inference</span>' : ''}
   </div>
 
-  <!-- VERDICT -->
   <div class="rc ${zc}">
     <div class="rct">ROUTING DECISION</div>
     <div class="vr">
       <div>
         <div class="sb ${sc}">${pct}%</div>
         <div style="font-size:9px;color:var(--mu);margin-top:3px">FRAUD PROBABILITY${s2?' (Stage 2 final)':' (Stage 1)'}</div>
-        <div class="pt" style="width:200px">
-          <div class="pf ${fc}" style="width:${pct}%"></div>
-        </div>
+        <div class="pt"><div class="pf ${fc}" style="width:${pct}%"></div></div>
       </div>
       <div class="vb ${zone}">${zone.replace('_',' ')}</div>
     </div>
-    <div style="font-size:9px;color:var(--di);display:flex;gap:14px">
+    <div style="font-size:9px;color:var(--di);display:flex;gap:14px;flex-wrap:wrap">
       <span>θ_low=${R.low_thresh}</span>
       <span>θ_high=${R.high_thresh}</span>
       <span style="color:var(--mu)">${zone==='REVIEW'
-        ? '→ escalated to Stage 2 (uncertain zone)'
-        : '→ decided at Stage 1 — zero GPU consumed'}</span>
+        ? '→ escalated to Stage 2'
+        : '→ decided at Stage 1 — zero GPU'}</span>
     </div>
   </div>
 
-  <!-- TIMING -->
   <div class="rc cn">
-    <div class="rct">PIPELINE TIMING — REAL MEASUREMENTS</div>
+    <div class="rct">PIPELINE TIMING</div>
     <div class="sg">
       <div class="sc ss1">
-        <div class="sn">STAGE 1 — HYBRID SVM (CPU)</div>
+        <div class="sn">STAGE 1 — SVM (CPU)</div>
         <div class="st">${s1.time_ms}ms</div>
-        <div class="snt">${R.svm_tps.toLocaleString()} preds/sec · no GPU</div>
+        <div class="snt">${R.svm_tps.toLocaleString()} preds/sec</div>
       </div>
       <div class="sc ${zone==='REVIEW'?'ss2a':'ss2n'}">
-        <div class="sn">STAGE 2 — DISTILBERT ${zone==='REVIEW'?'(PRE-CACHED)':'(NOT TRIGGERED)'}</div>
+        <div class="sn">STAGE 2 — DISTILBERT ${zone==='REVIEW'?'(CACHED)':'(NOT TRIGGERED)'}</div>
         <div class="st">${zone==='REVIEW' && s2 ? s2.time_ms+'ms' : '—'}</div>
         <div class="snt">${zone==='REVIEW'
-          ? `${R.bert_tps} preds/sec · GPU · only ${(esc*100).toFixed(1)}% of inputs`
-          : `${(R.low_risk_pct+R.high_risk_pct).toFixed(1)}% of all inputs handled here`}</div>
+          ? `${R.bert_tps} preds/sec · GPU · ${(esc*100).toFixed(1)}% of inputs`
+          : `${(R.low_risk_pct+R.high_risk_pct).toFixed(1)}% handled at Stage 1`}</div>
       </div>
     </div>
   </div>
 
   ${s2 ? `
-  <!-- ATTENTION GATE -->
   <div class="rc cb">
-    <div class="rct">ATTENTION GATE — MODALITY WEIGHTS (DISTILBERT)</div>
+    <div class="rct">ATTENTION GATE — MODALITY WEIGHTS</div>
     <div class="gr2">
       <div class="glr">
-        <span style="color:var(--mu)">Text (DistilBERT [CLS] embedding)</span>
+        <span style="color:var(--mu)">Text (DistilBERT [CLS])</span>
         <span class="gv" style="color:var(--bl)">${(s2.text_weight*100).toFixed(1)}%</span>
       </div>
       <div class="gt"><div class="gf fb" style="width:${(s2.text_weight*100).toFixed(1)}%"></div></div>
     </div>
     <div class="gr2">
       <div class="glr">
-        <span style="color:var(--mu)">Metadata (288-dim structured features)</span>
+        <span style="color:var(--mu)">Metadata (288-dim)</span>
         <span class="gv" style="color:#a78bfa">${(s2.meta_weight*100).toFixed(1)}%</span>
       </div>
       <div class="gt"><div class="gf fp" style="width:${(s2.meta_weight*100).toFixed(1)}%"></div></div>
     </div>
-    <div style="font-size:9px;color:var(--di);margin-top:7px">
-      Consistent with thesis finding: text dominates at ᾱ ≈ 0.978 across all prediction categories (Table 5.6)
-    </div>
-    ${s2.note ? `<div style="font-size:9px;color:var(--mu);font-style:italic;margin-top:5px">ℹ ${s2.note} · closest match: s1=${s2.closest_s1}</div>`:''}
+    <div style="font-size:9px;color:var(--di);margin-top:7px">Text dominates at ᾱ ≈ 0.978 (Table 5.6)</div>
+    ${s2.note ? `<div style="font-size:9px;color:var(--mu);font-style:italic;margin-top:5px">ℹ ${s2.note} · closest s1=${s2.closest_s1}</div>`:''}
   </div>` : ''}
 
-  <!-- FRAUD TERMS -->
   <div class="rc ${terms.length>0?'cr':'cg'}">
-    <div class="rct">🔍 TERM ANALYSIS — LR COEFFICIENTS (REAL MODEL)</div>
+    <div class="rct">🔍 TERM ANALYSIS — LR COEFFICIENTS</div>
     ${terms.length > 0 ? `
     <div class="tw">
       ${terms.map(t=>`<span class="tc tf">${t.term} <span style="opacity:.55">${t.score.toFixed(2)}</span></span>`).join('')}
@@ -589,22 +598,21 @@ function render(d, fullTxt, apiOk) {
     <div class="tw">
       ${['our','digital','growing','english','web','companies','client','recruitment'].map(t=>`<span class="tc tl">${t}</span>`).join('')}
     </div>
-    <div style="font-size:10px;color:var(--mu)">No fraud-pattern vocabulary detected. Strong legitimacy indicators present.</div>`}
+    <div style="font-size:10px;color:var(--mu)">No fraud-pattern vocabulary detected.</div>`}
   </div>
 
-  <!-- COST METER -->
   <div class="rc cn">
-    <div class="rct">⚡ GPU COST COMPARISON — THIS IS THE COST ARGUMENT</div>
+    <div class="rct">⚡ GPU COST COMPARISON</div>
     <div class="cs">
       <div class="cb2">
-        <div class="cl">UNIVERSAL BERT / 1M PREDS</div>
+        <div class="cl">BERT / 1M PREDS</div>
         <div class="ca2" style="color:var(--rd)">$${R.cost_bert_per_1m.toFixed(4)}</div>
-        <div class="cl">always uses GPU</div>
+        <div class="cl">always GPU</div>
       </div>
       <div class="cb2">
-        <div class="cl">TWO-STAGE / 1M PREDS</div>
+        <div class="cl">TWO-STAGE / 1M</div>
         <div class="ca2" style="color:var(--gr)">$${R.cost_ts_per_1m.toFixed(5)}</div>
-        <div class="cl">GPU for ${(esc*100).toFixed(1)}% only</div>
+        <div class="cl">GPU ${(esc*100).toFixed(1)}% only</div>
       </div>
       <div class="cb2" style="border-color:var(--amb)">
         <div class="cl">REDUCTION</div>
@@ -614,35 +622,26 @@ function render(d, fullTxt, apiOk) {
     </div>
     <div class="brc">
       <div class="brr">
-        <div class="brl">
-          <span>Universal DistilBERT — GPU every single prediction</span>
-          <span style="color:var(--rd)">${R.gpu_hrs_bert_annual}h GPU / year (10M postings)</span>
-        </div>
+        <div class="brl"><span>Universal BERT</span><span style="color:var(--rd)">${R.gpu_hrs_bert_annual}h GPU/yr</span></div>
         <div class="bro"><div class="bri" style="width:100%;background:#7f1d1d"></div></div>
       </div>
       <div class="brr">
-        <div class="brl">
-          <span>Two-Stage Pipeline — GPU for ${(esc*100).toFixed(1)}% only</span>
-          <span style="color:var(--gr)">${R.gpu_hrs_ts_annual}h GPU / year</span>
-        </div>
-        <div class="bro">
-          <div class="bri" style="width:${(esc*100).toFixed(1)}%;background:#14532d;min-width:3px"></div>
-        </div>
+        <div class="brl"><span>Two-Stage Pipeline</span><span style="color:var(--gr)">${R.gpu_hrs_ts_annual}h GPU/yr</span></div>
+        <div class="bro"><div class="bri" style="width:${(esc*100).toFixed(1)}%;background:#14532d;min-width:3px"></div></div>
       </div>
     </div>
     <div style="margin-top:10px;padding:8px 10px;font-size:10px;
       background:var(--${zone==='REVIEW'?'amd':'gd'});
       border:1px solid var(--${zone==='REVIEW'?'amb':'gb'})">
       ${zone==='REVIEW'
-        ? `⚠ This input was escalated → Stage 2 GPU used. This happens for ${(esc*100).toFixed(1)}% of real inputs.`
-        : `✓ This input was handled entirely by Stage 1 CPU. Zero GPU consumed. This is ${(R.low_risk_pct+R.high_risk_pct).toFixed(1)}% of all inputs.`}
+        ? `⚠ Escalated → Stage 2 GPU used. Happens for ${(esc*100).toFixed(1)}% of real inputs.`
+        : `✓ Handled by Stage 1 CPU. Zero GPU consumed. This is ${(R.low_risk_pct+R.high_risk_pct).toFixed(1)}% of all inputs.`}
     </div>
   </div>
 
-  <!-- REAL PERFORMANCE -->
   <div class="rc cn">
-    <div class="rct">REAL MODEL PERFORMANCE (EMSCAD TEST SET · n=${(3576).toLocaleString()})</div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+    <div class="rct">REAL MODEL PERFORMANCE (EMSCAD · n=3,576)</div>
+    <div class="perf-grid">
       ${[
         ['F1 SCORE', R.svm_f1, ''],
         ['ROC-AUC', R.svm_roc_auc, ''],
@@ -662,7 +661,6 @@ function render(d, fullTxt, apiOk) {
 
   document.getElementById('results').innerHTML = html;
 
-  // Animate bars after paint
   setTimeout(() => {
     document.querySelectorAll('.pf,.gf,.bri').forEach(el => {
       const w = el.style.width; el.style.width = '0';
@@ -671,17 +669,16 @@ function render(d, fullTxt, apiOk) {
   }, 60);
 }
 
-// ── INIT: ping API and update TPS badge ──────────────────────────────────────
 (async () => {
   try {
     const r = await fetch(`${API_URL}/health`, {signal: AbortSignal.timeout(10000)});
     if (r.ok) {
       const h = await r.json();
       document.getElementById('tpsLabel').textContent =
-        `${(h.svm_tps/1000).toFixed(0)}K preds/sec`;
+        `${(h.svm_tps/1000).toFixed(0)}K/s`;
     }
   } catch(_) {
-    document.getElementById('tpsLabel').textContent = 'API OFFLINE';
+    document.getElementById('tpsLabel').textContent = 'OFFLINE';
     document.getElementById('tpsLabel').style.borderColor = 'var(--rdb)';
     document.getElementById('tpsLabel').style.color = 'var(--rd)';
   }
