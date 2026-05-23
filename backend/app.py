@@ -155,3 +155,13 @@ def terms():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
+
+@app.route('/')
+def serve_frontend():
+    return send_from_directory('../frontend', 'index.html')
+
+from flask import send_from_directory
+
+@app.route('/')
+def serve_frontend():
+    return send_from_directory('../frontend', 'index.html')
