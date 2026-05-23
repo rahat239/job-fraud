@@ -1,7 +1,7 @@
 import os, json, time, re, pickle
 import numpy as np
 import pandas as pd
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from scipy.sparse import hstack
 
@@ -74,6 +74,10 @@ def get_fraud_terms(X_text_vec, top_n=8):
 def find_s2(s1_prob):
     return min(s2_cache, key=lambda x: abs(x['s1_prob'] - s1_prob))
 
+@app.route('/')
+def serve_frontend():
+    return send_from_directory('../frontend', 'index.html')
+
 @app.route('/health')
 def health():
     return jsonify({"status": "ok", "svm_tps": M['svm_tps'], "loaded": True})
@@ -84,7 +88,6 @@ def predict():
     if not any(fields.get(c,'').strip() for c in TEXT_COLS):
         return jsonify({"error": "No text provided"}), 400
 
-    # ── Stage 1: REAL SVM inference ──────────────────────────────────────────
     t0 = time.perf_counter()
     text, X_text_vec, X_hyb = build_features(fields)
     s1_prob = float(svm.predict_proba(X_hyb)[0, 1])
@@ -125,7 +128,6 @@ def predict():
         }
     }
 
-    # ── Stage 2: Pre-cached DistilBERT lookup ────────────────────────────────
     if zone == 'REVIEW':
         t2    = time.perf_counter()
         match = find_s2(s1_prob)
@@ -155,13 +157,3 @@ def terms():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
-
-@app.route('/')
-def serve_frontend():
-    return send_from_directory('../frontend', 'index.html')
-
-from flask import send_from_directory
-
-@app.route('/')
-def serve_frontend():
-    return send_from_directory('../frontend', 'index.html')
