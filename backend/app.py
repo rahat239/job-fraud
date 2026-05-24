@@ -167,9 +167,6 @@ select option{background:#090d1a}
 .lt{font-size:10px;color:var(--cy);letter-spacing:2px}
 .pb2{display:inline-flex;font-size:10px;padding:4px 10px;border:1px solid var(--gb);color:var(--gr);background:var(--gd)}
 .pg{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.desk-wrap{display:block}.left-col,.right-col{display:block;width:100%}
-.desk-wrap{display:block}.left-col,.right-col{display:block;width:100%}
-.desk-wrap{display:block !important}.left-col,.right-col{display:block !important;width:100% !important;height:auto !important;overflow:visible !important}
 .desk-wrap{display:block}.left-col,.right-col{display:block;width:100%;height:auto;overflow:visible}
 @media(min-width:900px){
   body{display:flex;flex-direction:column;height:100vh;overflow:hidden}
