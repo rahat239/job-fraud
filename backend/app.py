@@ -76,7 +76,7 @@ def find_s2(s1_prob):
 
 @app.route('/')
 def serve_frontend():
-    return send_from_directory('../frontend', 'index.html')
+    import os as _os; return send_from_directory(_os.path.join(_os.path.dirname(__file__), '../frontend'), 'index.html')
 
 @app.route('/health')
 def health():
